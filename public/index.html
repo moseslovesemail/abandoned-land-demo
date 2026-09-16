@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abandoned Land NZ — Working Prototype</title>
+  <meta name="description" content="Prototype platform for surfacing and triaging underutilised land opportunities across New Zealand councils." />
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark">AL</div>
+      <div>
+        <strong>Abandoned Land NZ</strong>
+        <span>South Island discovery prototype</span>
+      </div>
+    </div>
+    <div class="status-pill"><span></span> Working demo</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">LAND INTELLIGENCE FOR COUNCILS + BUYERS</p>
+        <h1>Find overlooked land before it disappears into another spreadsheet.</h1>
+        <p class="intro">
+          A prototype discovery layer for council surplus land, public-source leads,
+          underutilised parcels and future rates-sale / cadastral data feeds.
+        </p>
+      </div>
+      <button class="primary" id="openLead">+ Submit a land lead</button>
+    </section>
+
+    <section class="notice">
+      <strong>Prototype data only.</strong>
+      Every parcel shown here is synthetic. The demo is designed to prove workflow, triage,
+      filtering and council-to-market discovery — not to assert that any real property is abandoned.
+    </section>
+
+    <section class="stats">
+      <article><span id="statSites">0</span><small>candidate parcels</small></article>
+      <article><span id="statCouncils">0</span><small>districts represented</small></article>
+      <article><span id="statHigh">0</span><small>sites above 200m</small></article>
+      <article><span id="statAvg">0</span><small>average opportunity score</small></article>
+    </section>
+
+    <section class="workspace">
+      <div class="panel filters">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">DISCOVERY</p>
+            <h2>Candidate land</h2>
+          </div>
+          <button class="ghost" id="resetFilters">Reset</button>
+        </div>
+
+        <div class="filter-grid">
+          <label>
+            Search
+            <input id="search" placeholder="Motueka, West Coast, elevated..." />
+          </label>
+          <label>
+            Council
+            <select id="council">
+              <option>All</option>
+            </select>
+          </label>
+          <label>
+            Minimum elevation
+            <select id="minElevation">
+              <option value="">Any elevation</option>
+              <option value="150">150m+</option>
+              <option value="200">200m+</option>
+              <option value="300">300m+</option>
+              <option value="500">500m+</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="cards" class="cards"></div>
+      </div>
+
+      <div class="panel map-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">SPATIAL VIEW</p>
+            <h2>South Island pilot map</h2>
+          </div>
+        </div>
+        <div id="map"></div>
+        <div class="map-footer">
+          Future layers: LINZ parcels · zoning · flood risk · road access · elevation · council ownership · rates notices
+        </div>
+      </div>
+    </section>
+
+    <section class="panel pipeline">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">COUNCIL WORKFLOW</p>
+          <h2>How the system turns scattered records into opportunities</h2>
+        </div>
+      </div>
+      <div class="flow">
+        <div><b>1</b><strong>Ingest</strong><span>LGOIMA, council datasets, notices, open data and manual leads.</span></div>
+        <div><b>2</b><strong>Verify</strong><span>Ownership, legal status, access, constraints and source provenance.</span></div>
+        <div><b>3</b><strong>Score</strong><span>Elevation, hazard exposure, access, zoning, size and strategic fit.</span></div>
+        <div><b>4</b><strong>Notify</strong><span>Qualified buyers or project partners receive permissioned alerts.</span></div>
+      </div>
+    </section>
+
+    <section class="panel leads-panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">LIVE DEMO DATA</p>
+          <h2>Lead intake queue</h2>
+        </div>
+        <button class="ghost" id="refreshLeads">Refresh</button>
+      </div>
+      <div id="leadTable"></div>
+    </section>
+  </main>
+
+  <dialog id="leadDialog">
+    <form id="leadForm">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">NEW LEAD</p>
+          <h2>Submit a land lead</h2>
+        </div>
+        <button type="button" class="close" id="closeLead">×</button>
+      </div>
+      <div class="form-grid">
+        <label>Council / authority<input name="council" required placeholder="Tasman District" /></label>
+        <label>Location<input name="location" required placeholder="Motueka foothills" /></label>
+        <label>Source<input name="source" placeholder="Council agenda / LGOIMA / public notice" /></label>
+        <label>Contact<input name="contact" placeholder="name@example.nz" /></label>
+        <label class="wide">Notes<textarea name="notes" rows="4" placeholder="What makes this parcel worth checking?"></textarea></label>
+      </div>
+      <div class="dialog-actions">
+        <span id="formMsg"></span>
+        <button type="submit" class="primary">Add to demo queue</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer>
+    <span>Abandoned Land NZ · Prototype</span>
+    <span>Built as a deployable demonstration — data shown is synthetic.</span>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="/app.js"></script>
+</body>
+</html>
